@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บุคคิว - ระบบจองคิวออนไลน์ครบวงจร (Booking Solution)</title>
+    <meta name="description" content="ยกระดับการนัดหมายธุรกิจของคุณด้วย บุคคิว (BookQ) ระบบจองคิวออนไลน์ที่สะดวก รวดเร็ว และเป็นมืออาชีพ">
+    <!-- Google Fonts: Sarabun & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#home" class="logo-wrapper">
+                <div class="logo-svg">
+                    <svg viewBox="0 0 100 100" width="45" height="45">
+                        <circle cx="50" cy="50" r="45" fill="#0f2b48" />
+                        <circle cx="50" cy="50" r="38" fill="none" stroke="#ffffff" stroke-width="2" />
+                        <!-- Clock hands -->
+                        <line x1="50" y1="50" x2="50" y2="25" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                        <line x1="50" y1="50" x2="68" y2="50" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                        <!-- Person/User icon inside clock -->
+                        <circle cx="50" cy="65" r="8" fill="#ffffff" />
+                        <path d="M35 82 C35 72, 65 72, 65 82" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-title">บุคคิว</span>
+                    <span class="brand-subtitle">Booking Solution</span>
+                </div>
+            </a>
+
+            <!-- Search Bar in Header -->
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="header-search-input" placeholder="ค้นหาชื่อ, เบอร์โทร, บริการ...">
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <a href="#home" class="nav-item active" id="nav-home">หน้าแรก</a>
+                <a href="#about" class="nav-item" id="nav-about">เกี่ยวกับธุรกิจ</a>
+                <a href="#booking" class="nav-item" id="nav-booking">การจอง</a>
+                <button class="btn-theme-toggle" id="theme-toggle-btn" title="สลับโหมดมืด/สว่าง">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="#login" class="btn-admin-login" id="nav-login-btn">เข้าสู่ระบบแอดมิน</a>
+                <!-- Show admin info if logged in -->
+                <div class="user-profile-nav" id="user-profile-nav" style="display: none;">
+                    <a href="#dashboard" class="btn-dashboard-nav"><i class="fa-solid fa-chart-line"></i> แดชบอร์ด</a>
+                    <button class="btn-logout" id="btn-logout-nav" title="ออกจากระบบ"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAVIGATION MENU -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-search-bar">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="mobile-search-input" placeholder="ค้นหาชื่อ, เบอร์โทร, บริการ...">
+        </div>
+        <a href="#home" class="mobile-nav-item active"><i class="fa-solid fa-house"></i> หน้าแรก</a>
+        <a href="#about" class="mobile-nav-item"><i class="fa-solid fa-circle-info"></i> เกี่ยวกับธุรกิจ</a>
+        <a href="#booking" class="mobile-nav-item"><i class="fa-regular fa-calendar-check"></i> การจองคิว</a>
+        <button class="mobile-nav-item mobile-theme-toggle-btn" id="mobile-theme-toggle-btn" type="button">
+            <i class="fa-solid fa-moon"></i> <span id="mobile-theme-text">โหมดมืด (Dark Mode)</span>
+        </button>
+        <a href="#login" class="mobile-nav-item" id="mobile-login-link"><i class="fa-solid fa-lock"></i> เข้าสู่ระบบแอดมิน</a>
+        <a href="#dashboard" class="mobile-nav-item" id="mobile-dashboard-link" style="display: none;"><i class="fa-solid fa-chart-line"></i> แดชบอร์ดแอดมิน</a>
+        <a href="#" class="mobile-nav-item" id="mobile-logout-link" style="display: none;"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a>
+    </div>
+
+    <!-- MAIN CONTENT VIEWPORTS -->
+    <main class="main-content">
+
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="view-section active">
+            <!-- Hero Slider Banner -->
+            <div class="hero-banner" style="background: none; min-height: auto; box-shadow: none; padding: 2rem 1.5rem; align-items: center;">
+                <a href="#booking" style="display: block; max-width: 1400px; width: 100%;">
+                    <img src="banner.png" alt="ยกระดับการนัดหมายธุรกิจของคุณ" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 0 auto;">
+                </a>
+            </div>
+                
+                <!-- Bottom Feature Ticker -->
+                <div class="ticker-banner">
+                    <div class="ticker-item"><i class="fa-solid fa-clock"></i> จองคิวออนไลน์ 24 ชม.</div>
+                    <div class="ticker-item"><i class="fa-solid fa-circle-check"></i> ยืนยันทันที</div>
+                    <div class="ticker-item"><i class="fa-solid fa-users"></i> รองรับการใช้งานแบบทีม</div>
+                </div>
+            </div>
+
+            <!-- Three Process Steps -->
+            <div class="section-container">
+                <div class="process-steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon-wrapper">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <h3>1.เลือกบริการ</h3>
+                        <p>จองเวลานัดหมายจากคิว</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon-wrapper">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <h3>2.เลือกเวลา</h3>
+                        <p>เลือกเวลาและวันได้ง่ายและสะดวกรวดเร็ว</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon-wrapper">
+                            <i class="fa-regular fa-file-lines"></i>
+                        </div>
+                        <h3>3.ยืนยันข้อมูล</h3>
+                        <p>ยืนยันข้อมูลเวลาการจอง</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column: Why Us & Quick Booking Widget -->
+            <div class="section-container">
+                <div class="two-col-layout">
+                    <!-- Left: Why Us -->
+                    <div class="info-column">
+                        <h2 class="section-title">เหตุผลที่ต้องใช้ระบบเรา</h2>
+                        <ul class="why-us-list">
+                            <li><i class="fa-solid fa-check"></i> สะดวก รวดเร็ว ประหยัดเวลา</li>
+                            <li><i class="fa-solid fa-check"></i> ลดขั้นตอนการดีลงาน</li>
+                            <li><i class="fa-solid fa-check"></i> มีระบบแจ้งเตือนผ่านอีเมลและการบันทึกลง Google Calendar อัตโนมัติ</li>
+                        </ul>
+
+                        <div class="contact-card">
+                            <h3><i class="fa-solid fa-address-book"></i> ช่องทางติดต่อ</h3>
+                            <p><i class="fa-solid fa-phone"></i> <strong>0807315032</strong></p>
+                            <p><i class="fa-regular fa-envelope"></i> <strong>dancepla0501.com@gmail.com</strong></p>
+                            <p><i class="fa-solid fa-location-dot"></i> <strong>บริษัท วิทยาลัยเทคนิคสระบุรี</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Booking Preview Widget -->
+                    <div class="widget-column">
+                        <div class="mini-calendar-widget">
+                            <div class="mini-cal-header">
+                                <button class="mini-cal-nav prev-month"><i class="fa-solid fa-chevron-left"></i></button>
+                                <span class="mini-cal-month-year" id="mini-cal-title">มิถุนายน 2026</span>
+                                <button class="mini-cal-nav next-month"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="mini-cal-weekdays">
+                                <div>Mo</div><div>Tu</div><div>Wd</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
+                            </div>
+                            <div class="mini-cal-days" id="mini-cal-days-grid">
+                                <!-- Generated Dynamically -->
+                            </div>
+                            
+                            <div class="mini-slots-title">ช่วงเวลาแนะนำ</div>
+                            <div class="mini-slots-grid" id="mini-slots-container">
+                                <!-- Generated Dynamically -->
+                            </div>
+
+                            <div class="mini-cal-footer">
+                                <a href="#booking" class="btn-full-calendar">ดูปฏิทินเต็ม</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT & SERVICES VIEW -->
+        <section id="view-about" class="view-section">
+            <!-- Corporate Banner -->
+            <div class="hero-banner corporate-hero" style="background: none; min-height: auto; box-shadow: none; padding: 2rem 1.5rem; align-items: center;">
+                <div style="display: block; max-width: 1400px; width: 100%;">
+                    <img src="about_banner.png" alt="องค์กรยุคใหม่ จัดการนัดหมายอย่างมืออาชีพ" style="width: 100%; height: auto; display: block; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 0 auto;">
+                </div>
+            </div>
+
+            <!-- Three Service Offerings -->
+            <div class="section-container">
+                <div class="services-header">
+                    <h2 class="section-title text-center">บริการให้คำปรึกษาและนัดหมาย</h2>
+                    <p class="section-subtitle text-center">ปรึกษาผู้เชี่ยวชาญเพื่อผลักดันธุรกิจของคุณไปสู่อนาคต</p>
+                </div>
+                
+                <div class="process-steps-grid services-grid">
+                    <div class="step-card service-card">
+                        <div class="service-icon"><span class="emoji-icon">💡</span></div>
+                        <h3>ปรึกษาธุรกิจ</h3>
+                        <p class="service-desc">รับคำแนะนำจากผู้เชี่ยวชาญ วางแผนกลยุทธ์ 45 นาที</p>
+                        <a href="#booking?service=ปรึกษาธุรกิจ" class="btn-service-select">จองคิวบริการนี้</a>
+                    </div>
+                    <div class="step-card service-card">
+                        <div class="service-icon"><span class="emoji-icon">🤝</span></div>
+                        <h3>เจรจาการค้า</h3>
+                        <p class="service-desc">เจรจาการค้านัดหมาย วางแผนกลยุทธ์ 45 นาที</p>
+                        <a href="#booking?service=เจรจาการค้า" class="btn-service-select">จองคิวบริการนี้</a>
+                    </div>
+                    <div class="step-card service-card">
+                        <div class="service-icon"><span class="emoji-icon">📈</span></div>
+                        <h3>นัดพบพิเศษ</h3>
+                        <p class="service-desc">นัดพบพิเศษจากผู้เชี่ยวชาญ วางแผนกลยุทธ์ 45 นาที</p>
+                        <a href="#booking?service=นัดพบพิเศษ" class="btn-service-select">จองคิวบริการนี้</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team & Contact Section -->
+            <div class="section-container team-contact-container">
+                <h2 class="section-title text-center">ส่วนทีมงานและข้อมูลติดต่อ (Team & Contact)</h2>
+                
+                <div class="team-layout">
+                    <!-- Left: Expert Profiles -->
+                    <div class="team-experts-side">
+                        <h3>ทีมงานและผู้เชี่ยวชาญของเรา</h3>
+                        <div class="team-profiles-grid">
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h4>แอดมินอัญ</h4>
+                                    <p>ผู้เชี่ยวชาญด้านกฎหมายธุรกิจ</p>
+                                </div>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h4>แอดมินแอน</h4>
+                                    <p>ผู้เชี่ยวชาญด้านการวางแผนกลยุทธ์</p>
+                                </div>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h4>แอดมินเก่ง</h4>
+                                    <p>ที่ปรึกษาการตลาดและการเงิน</p>
+                                </div>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h4>แอดมินสมศรี</h4>
+                                    <p>ผู้จัดการฝ่ายประสานงานองค์กร</p>
+                                </div>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h4>แอดมินบอย</h4>
+                                    <p>ฝ่ายบริการลูกค้าและการจอง</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Organization Contacts -->
+                    <div class="org-contact-side">
+                        <h3>ติดต่อองค์กร</h3>
+                        <div class="org-contact-details">
+                            <div class="contact-detail-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <div>
+                                    <label>เบอร์โทรศัพท์</label>
+                                    <p>080-7315032</p>
+                                </div>
+                            </div>
+                            <div class="contact-detail-item">
+                                <i class="fa-regular fa-envelope"></i>
+                                <div>
+                                    <label>อีเมลติดต่อ</label>
+                                    <p>dancepla0501@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-detail-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <div>
+                                    <label>ที่ตั้งสำนักงาน</label>
+                                    <p>วิทยาลัยเทคนิคสระบุรี</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. BOOKING VIEW -->
+        <section id="view-booking" class="view-section">
+            <div class="section-container booking-container">
+                <div class="booking-card">
+                    <h2 class="booking-title text-center"><i class="fa-regular fa-calendar-check"></i> ทำการจองคิวออนไลน์</h2>
+                    <p class="booking-subtitle text-center">เลือกวัน เวลา และกรอกข้อมูลของท่านเพื่อยืนยันสิทธิ์การนัดหมาย</p>
+
+                    <!-- Interactive Calendar View -->
+                    <div class="booking-calendar-wrapper">
+                        <div class="calendar-header-bar">
+                            <button class="cal-nav-btn" id="booking-cal-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                            <h3 class="cal-month-display" id="booking-cal-title">มิถุนายน 2026</h3>
+                            <button class="cal-nav-btn" id="booking-cal-next"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Mo</div><div>Tu</div><div>Wd</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
+                        </div>
+                        <div class="calendar-days-grid" id="booking-cal-days-grid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Available Times Area -->
+                    <div class="slots-selection-area">
+                        <h4 class="selection-title"><i class="fa-regular fa-clock"></i> เลือกช่วงเวลาจอง: <span id="selected-date-label">กรุณาเลือกวันที่ก่อน</span></h4>
+                        <div class="times-grid" id="booking-slots-grid">
+                            <!-- Dynamic times -->
+                        </div>
+                    </div>
+
+                    <!-- Form details -->
+                    <form class="booking-details-form" id="booking-form">
+                        <div class="form-row-two">
+                            <div class="form-group">
+                                <label for="booking-name"><i class="fa-regular fa-user"></i> ชื่อผู้ติดต่อ <span class="required">*</span></label>
+                                <input type="text" id="booking-name" placeholder="ชื่อ-นามสกุลของคุณ" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-company"><i class="fa-regular fa-building"></i> ชื่อบริษัท / องค์กร</label>
+                                <input type="text" id="booking-company" placeholder="ระบุบริษัทของคุณ (ถ้ามี)">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row-two">
+                            <div class="form-group">
+                                <label for="booking-phone"><i class="fa-solid fa-phone"></i> เบอร์โทรศัพท์ <span class="required">*</span></label>
+                                <input type="tel" id="booking-phone" placeholder="เช่น 0807315032" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-service"><i class="fa-solid fa-gears"></i> เลือกประเภทบริการ <span class="required">*</span></label>
+                                <select id="booking-service" required>
+                                    <option value="" disabled selected>-- เลือกบริการ --</option>
+                                    <option value="ปรึกษาธุรกิจ">💡 ปรึกษาธุรกิจ (45 นาที)</option>
+                                    <option value="เจรจาการค้า">🤝 เจรจาการค้า (45 นาที)</option>
+                                    <option value="นัดพบพิเศษ">📈 นัดพบพิเศษ (45 นาที)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Date/Time Display Summary -->
+                        <div class="booking-summary-badges">
+                            <div class="summary-badge" id="badge-selected-date">
+                                <i class="fa-regular fa-calendar"></i> ยังไม่ระบุวันที่
+                            </div>
+                            <div class="summary-badge" id="badge-selected-time">
+                                <i class="fa-regular fa-clock"></i> ยังไม่ระบุเวลา
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit-booking" id="btn-submit-booking" disabled>
+                            <i class="fa-solid fa-circle-check"></i> ยืนยันการจองคิว
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Booking steps explanation overlay matching homepage design but for detail -->
+            <div class="section-container">
+                <div class="process-steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon-wrapper"><i class="fa-regular fa-calendar"></i></div>
+                        <h3>1.เลือกบริการ</h3>
+                        <p>จองเวลานัดหมายจากคิว</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon-wrapper"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                        <h3>2.เลือกเวลา</h3>
+                        <p>เลือกเวลาและวันได้ง่ายและสะดวกรวดเร็ว</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon-wrapper"><i class="fa-regular fa-file-lines"></i></div>
+                        <h3>3.ยืนยันข้อมูล</h3>
+                        <p>ยืนยันข้อมูลเวลาการจอง</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ADMIN LOGIN VIEW -->
+        <section id="view-login" class="view-section">
+            <div class="section-container login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="login-logo-circle">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h2>เข้าสู่ระบบแอดมิน</h2>
+                        <p>กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบผู้ดูแลระบบ</p>
+                    </div>
+
+                    <form id="login-form" class="login-form-fields">
+                        <div class="login-error-message" id="login-error-msg" style="display: none;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-regular fa-user input-icon"></i>
+                                <input type="text" id="login-username" placeholder="ชื่อผู้ใช้/อีเมล" required autocomplete="username">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-key input-icon"></i>
+                                <input type="password" id="login-password" placeholder="รหัสผ่าน" required autocomplete="current-password">
+                                <button type="button" class="btn-toggle-password" id="btn-toggle-password">
+                                    <i class="fa-solid fa-eye-slash" id="toggle-password-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-admin-submit">เข้าสู่ระบบ</button>
+
+                        <div class="login-links">
+                            <a href="#" class="login-link-item">ลืมรหัสผ่าน?</a>
+                            <a href="#" class="login-link-item">ช่วยเหลือ?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ADMIN DASHBOARD VIEW -->
+        <section id="view-dashboard" class="view-section">
+            <div class="dashboard-header-container">
+                <h1 class="dashboard-main-title">แดชบอร์ดแอดมิน</h1>
+                <div class="dashboard-date-display" id="dashboard-current-date">วันอังคารที่ 18 มิถุนายน 2026</div>
+            </div>
+
+            <!-- Stats Grid Section -->
+            <div class="section-container">
+                <div class="stats-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper blue-bg">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">คิววันนี้</span>
+                            <h2 class="stat-value" id="stat-today-queues">23 คิว</h2>
+                            <span class="stat-subtext"><i class="fa-solid fa-arrow-up"></i> รอดำเนินการ: <span id="stat-pending-today">5</span></span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper green-bg">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">ยืนยันแล้ว</span>
+                            <h2 class="stat-value text-success" id="stat-confirmed-queues">18 คิว</h2>
+                            <span class="stat-subtext">เสร็จสิ้น: <span id="stat-completed-today">12</span></span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper red-bg">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">ยกเลิก</span>
+                            <h2 class="stat-value text-danger" id="stat-cancelled-queues">2 คิว</h2>
+                            <span class="stat-subtext">ไม่มีการตอบรับ</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper gold-bg">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">รายได้วันนี้</span>
+                            <h2 class="stat-value text-gold" id="stat-revenue">฿15,200</h2>
+                            <span class="stat-subtext">เฉลี่ยต่อคิว: ฿660</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Panel -->
+            <div class="section-container">
+                <div class="dashboard-main-grid">
+                    <!-- Left: Daily Queue Calendar -->
+                    <div class="dashboard-calendar-panel">
+                        <div class="panel-header-with-filters">
+                            <h3 class="panel-title">ปฏิทินคิวรายวัน</h3>
+                            <div class="filter-controls-row">
+                                <div class="filter-group">
+                                    <label for="filter-service">บริการ</label>
+                                    <select id="filter-service">
+                                        <option value="all">บริการทั้งหมด</option>
+                                        <option value="ปรึกษาธุรกิจ">ปรึกษาธุรกิจ</option>
+                                        <option value="เจรจาการค้า">เจรจาการค้า</option>
+                                        <option value="นัดพบพิเศษ">นัดพบพิเศษ</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filter-admin">แอดมิน</label>
+                                    <select id="filter-admin">
+                                        <option value="all">แอดมินทั้งหมด</option>
+                                        <option value="แอดมินอัญ">แอดมินอัญ</option>
+                                        <option value="แอดมินแอน">แอดมินแอน</option>
+                                        <option value="แอดมินเก่ง">แอดมินเก่ง</option>
+                                        <option value="แอดมินสมศรี">แอดมินสมศรี</option>
+                                        <option value="แอดมินบอย">แอดมินบอย</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Calendar Inside Dashboard -->
+                        <div class="dashboard-mini-cal-container">
+                            <div class="dashboard-cal-nav-bar">
+                                <button class="dash-cal-nav" id="dash-cal-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                                <span class="dash-cal-title" id="dash-cal-title">มิถุนายน 2026</span>
+                                <button class="dash-cal-nav" id="dash-cal-next"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="dash-cal-weekdays">
+                                <div>Mo</div><div>Tu</div><div>Wd</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
+                            </div>
+                            <div class="dash-cal-days-grid" id="dash-cal-days">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Slots details for selected dashboard date -->
+                        <div class="dash-date-slots-details">
+                            <h4 class="dash-details-title" id="dash-selected-date-label">คิววันที่ 18 มิถุนายน 2026</h4>
+                            <div class="dash-slots-timeline" id="dash-slots-timeline">
+                                <!-- Time slots populated here showing bookings -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Table of Latest Queues -->
+                    <div class="dashboard-table-panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">ตารางคิวล่าสุด</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="queues-table">
+                                <thead>
+                                    <tr>
+                                        <th>เวลา</th>
+                                        <th>ชื่อลูกค้า</th>
+                                        <th>บริการ</th>
+                                        <th>แอดมิน</th>
+                                        <th>สถานะ</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-queues-tbody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SUCCESS BOOKING MODAL -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="success-modal-card">
+            <div class="modal-icon-success">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2>จองคิวสำเร็จ!</h2>
+            <p>ระบบทำการบันทึกข้อมูลการนัดหมายของคุณเรียบร้อยแล้ว</p>
+            <div class="success-details-box" id="modal-success-details">
+                <!-- Filled dynamically -->
+            </div>
+            <button class="btn-close-modal" id="btn-close-success-modal">ตกลง</button>
+        </div>
+    </div>
+
+    <!-- MAIN FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col-brand">
+                <div class="logo-wrapper">
+                    <div class="logo-svg">
+                        <svg viewBox="0 0 100 100" width="45" height="45">
+                            <circle cx="50" cy="50" r="45" fill="#0f2b48" />
+                            <circle cx="50" cy="50" r="38" fill="none" stroke="#ffffff" stroke-width="2" />
+                            <line x1="50" y1="50" x2="50" y2="25" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                            <line x1="50" y1="50" x2="68" y2="50" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                            <circle cx="50" cy="65" r="8" fill="#ffffff" />
+                            <path d="M35 82 C35 72, 65 72, 65 82" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <span class="brand-title">บุคคิว</span>
+                        <span class="brand-subtitle">Booking Solution</span>
+                    </div>
+                </div>
+                <ul class="footer-links-list">
+                    <li><a href="#home">หน้าแรก</a></li>
+                    <li><a href="#about">เกี่ยวกับธุรกิจ</a></li>
+                    <li><a href="#booking">จองคิว</a></li>
+                    <li><a href="#login">เข้าสู่ระบบแอดมิน</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col-menu">
+                <h3>เมนู</h3>
+                <ul class="footer-links-list">
+                    <li><a href="#home">หน้าแรก</a></li>
+                    <li><a href="#booking">จองคิว</a></li>
+                    <li><a href="#login">เข้าสู่ระบบแอดมิน</a></li>
+                    <li><a href="#dashboard">แดชบอร์ดแอดมิน</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col-social">
+                <h3>ติดตามพวกเรา</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon-btn facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon-btn line"><i class="fa-brands fa-line"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Script tag -->
+    <script src="app.js"></script>
+</body>
+</html>
